@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    
+    <div class="mb-6 flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-black text-slate-800 tracking-tight">Nuevo Ticket</h1>
+            <p class="text-sm text-slate-500 font-medium">Describe tu incidencia para recibir ayuda.</p>
+        </div>
+        <a href="{% url 'lista_tickets' %}" class="inline-flex items-center text-slate-500 hover:text-blue-600 font-bold text-sm transition">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Volver al Panel
+        </a>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+        <div class="bg-slate-900 px-8 py-4 border-b border-slate-800">
+            <h3 class="text-white font-bold text-sm uppercase tracking-wide">Formulario de Reporte</h3>
+        </div>
+        
+        <form method="POST" enctype="multipart/form-data" class="p-8 space-y-8">
+            {% csrf_token %}
+
+            <div>
+                <label for="titulo" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                    Asunto de la Incidencia
+                </label>
+                <input type="text" name="titulo" id="titulo" required 
+                    class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition placeholder-slate-400"
+                    placeholder="Ej: No puedo acceder al sistema de facturación...">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <label for="area" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                        Área Afectada
+                    </label>
+                    <div class="relative">
+                        <select name="area" id="area" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition appearance-none cursor-pointer">
+                            <option value="" {% if not area_usuario_id %}selected{% endif %} disabled>-- Selecciona un Área --</option>
+                            {% for area in areas %}
+                                <option value="{{ area.id }}" {% if area.id == area_usuario_id %}selected{% endif %}>
+                                    {{ area.nombre }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="prioridad" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                        Nivel de Urgencia
+                    </label>
+                    <div class="relative">
+                        <select name="prioridad" id="prioridad" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition appearance-none cursor-pointer">
+                            <option value="BAJA">🟢 Baja (Consulta o duda)</option>
+                            <option value="NORMAL" selected>🔵 Normal (Incidencia estándar)</option>
+                            <option value="ALTA">🟠 Alta (Bloquea mi trabajo)</option>
+                            <option value="CRITICA">🔴 Crítica (Sistema caído)</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label for="descripcion" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                    Detalles del Problema
+                </label>
+                <textarea name="descripcion" id="descripcion" rows="5" required
+                    class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition placeholder-slate-400 resize-none"
+                    placeholder="Explica qué estabas haciendo cuando ocurrió el error..."></textarea>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                    Evidencia (Captura de pantalla)
+                </label>
+                
+                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:bg-slate-50 transition cursor-pointer relative group" id="drop-zone">
+                    <div class="space-y-1 text-center">
+                        
+                        <div id="upload-prompt">
+                            <svg class="mx-auto h-12 w-12 text-slate-400 group-hover:text-blue-500 transition" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div class="flex text-sm text-slate-600 justify-center">
+                                <label for="archivo" class="relative cursor-pointer bg-white rounded-md font-bold text-blue-600 hover:text-blue-500 focus-within:outline-none">
+                                    <span>Sube un archivo</span>
+                                    <input id="archivo" name="archivo" type="file" accept="image/*" class="sr-only">
+                                </label>
+                                <p class="pl-1">o arrástralo aquí</p>
+                            </div>
+                            <p class="text-xs text-slate-500">PNG, JPG, GIF hasta 10MB</p>
+                        </div>
+
+                        <div id="preview-container" class="hidden">
+                            <p class="text-xs font-bold text-green-600 mb-2">¡Archivo Seleccionado!</p>
+                            <img id="image-preview" src="#" alt="Vista previa" class="max-h-48 rounded-lg shadow-md mx-auto border border-slate-200">
+                            <p id="file-name" class="text-xs text-slate-500 mt-2 font-mono"></p>
+                            <button type="button" id="remove-file" class="mt-3 text-xs text-red-500 font-bold hover:text-red-700 underline">
+                                Cambiar imagen
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-100 flex items-center justify-end gap-4">
+                <a href="{% url 'lista_tickets' %}" class="px-6 py-3 rounded-xl text-slate-500 font-bold hover:bg-slate-100 transition">
+                    Cancelar
+                </a>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition transform active:scale-95 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                    Enviar Ticket
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    const input = document.getElementById('archivo');
+    const uploadPrompt = document.getElementById('upload-prompt');
+    const previewContainer = document.getElementById('preview-container');
+    const imagePreview = document.getElementById('image-preview');
+    const fileName = document.getElementById('file-name');
+    const removeBtn = document.getElementById('remove-file');
+
+    input.addEventListener('change', function(e) {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            
+            reader.addEventListener('load', function() {
+                imagePreview.setAttribute('src', this.result);
+                uploadPrompt.classList.add('hidden');
+                previewContainer.classList.remove('hidden');
+                fileName.textContent = file.name;
+            });
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+    removeBtn.addEventListener('click', function() {
+        input.value = ''; // Limpiar input
+        uploadPrompt.classList.remove('hidden');
+        previewContainer.classList.add('hidden');
+    });
+</script>
+
+{% endblock %}

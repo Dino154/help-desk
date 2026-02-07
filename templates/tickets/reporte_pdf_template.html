@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* --- ELIMINAMOS EL BLOQUE @PAGE QUE DABA ERROR --- */
+        
+        body { 
+            font-family: Helvetica, sans-serif; 
+            color: #333; 
+            line-height: 1.5; 
+            /* Añadimos margenes aquí en lugar de @page */
+            padding: 40px; 
+        }
+        
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #0f172a; padding-bottom: 10px; }
+        .header h1 { color: #0f172a; margin: 0; font-size: 24px; text-transform: uppercase; }
+        .header p { color: #666; font-size: 12px; margin-top: 5px; }
+
+        /* KPI BOXES */
+        .kpi-table { width: 100%; margin-bottom: 30px; border-spacing: 10px; }
+        .kpi-box { 
+            background-color: #f1f5f9; 
+            padding: 15px; 
+            text-align: center; 
+            border-radius: 8px; 
+            border: 1px solid #e2e8f0;
+        }
+        .kpi-number { font-size: 24px; font-weight: bold; color: #0f172a; display: block; }
+        .kpi-label { font-size: 10px; text-transform: uppercase; color: #64748b; font-weight: bold; }
+
+        /* TABLA PRINCIPAL */
+        .main-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .main-table th { background-color: #0f172a; color: white; padding: 8px; text-align: left; }
+        .main-table td { border-bottom: 1px solid #e2e8f0; padding: 8px; }
+        .main-table tr:nth-child(even) { background-color: #f8fafc; }
+        
+        /* COLORES DE ESTADO */
+        .status-resuelto { color: #166534; font-weight: bold; }
+        .status-critico { color: #991b1b; font-weight: bold; }
+        .status-pendiente { color: #854d0e; }
+
+        .footer { margin-top: 50px; text-align: center; font-size: 10px; color: #94a3b8; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Reporte de Incidencias</h1>
+        <p>Generado por: {{ usuario.username }} | Fecha: {% now "d/m/Y H:i" %}</p>
+    </div>
+
+    <table class="kpi-table">
+        <tr>
+            <td class="kpi-box">
+                <span class="kpi-number">{{ pendientes }}</span>
+                <span class="kpi-label">Pendientes</span>
+            </td>
+            <td class="kpi-box">
+                <span class="kpi-number">{{ proceso }}</span>
+                <span class="kpi-label">En Proceso</span>
+            </td>
+            <td class="kpi-box">
+                <span class="kpi-number" style="color: #16a34a;">{{ resueltos }}</span>
+                <span class="kpi-label">Resueltos</span>
+            </td>
+            <td class="kpi-box">
+                <span class="kpi-number" style="color: #dc2626;">{{ criticos }}</span>
+                <span class="kpi-label">Críticos</span>
+            </td>
+        </tr>
+    </table>
+
+    <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">Detalle de Tickets</h3>
+
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th width="5%">ID</th>
+                <th width="35%">Asunto</th>
+                <th width="15%">Área</th>
+                <th width="15%">Solicitante</th>
+                <th width="15%">Prioridad</th>
+                <th width="15%">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tickets %}
+            <tr>
+                <td>#{{ t.id }}</td>
+                <td>{{ t.titulo }}</td>
+                <td>{{ t.area.nombre }}</td>
+                <td>{{ t.creado_por.username }}</td>
+                <td>
+                    {% if t.prioridad == 'CRITICA' %}
+                        <span class="status-critico">CRÍTICA</span>
+                    {% else %}
+                        {{ t.get_prioridad_display }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if t.estado == 'RESUELTO' %}
+                        <span class="status-resuelto">RESUELTO</span>
+                    {% else %}
+                        {{ t.get_estado_display }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="footer">
+        Documento generado automáticamente por el sistema Help Desk TI.
+    </div>
+
+</body>
+</html>

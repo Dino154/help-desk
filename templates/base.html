@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Desk TI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 h-screen flex flex-col overflow-hidden">
+
+    {% if user.is_authenticated %}
+    
+        <nav class="glass-nav text-white shadow-lg z-50 w-full shrink-0">
+            <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    
+                    <div class="flex items-center gap-8">
+                        <div class="flex-shrink-0 flex items-center gap-2">
+                            <div class="bg-gradient-to-br from-blue-600 to-indigo-600 p-1.5 rounded-lg shadow-lg shadow-blue-500/30">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                            <span class="font-black text-lg tracking-wide uppercase bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">Help Desk</span>
+                        </div>
+
+                        <div class="hidden md:flex items-baseline space-x-1">
+                            
+                            <a href="{% url 'lista_tickets' %}" class="hover:bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-2 group">
+                                <svg class="w-4 h-4 text-blue-400 group-hover:text-blue-300 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                                Tickets
+                            </a>
+
+                            {% if user.is_staff %}
+                            <a href="{% url 'tablero_kanban' %}" class="hover:bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-2 group">
+                                <svg class="w-4 h-4 text-purple-400 group-hover:text-purple-300 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path></svg>
+                                Tablero
+                            </a>
+                            {% endif %}
+
+                            <a href="{% url 'base_conocimientos' %}" class="hover:bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-2 group">
+                                <svg class="w-4 h-4 text-yellow-400 group-hover:text-yellow-300 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                Wiki
+                            </a>
+
+                            {% if user.is_staff %}
+                                <a href="{% url 'gestion_usuarios' %}" class="hover:bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-2 group">
+                                    <svg class="w-4 h-4 text-pink-400 group-hover:text-pink-300 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                                    Usuarios
+                                </a>
+
+                                <a href="{% url 'reportes' %}" class="hover:bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-2 group">
+                                    <svg class="w-4 h-4 text-cyan-400 group-hover:text-cyan-300 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                    Reportes
+                                </a>
+
+                                <a href="{% url 'gestion_proyectos' %}" class="hover:bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-2 group">
+                                    <svg class="w-4 h-4 text-green-400 group-hover:text-green-300 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                                    Proyectos
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <a href="{% url 'crear_ticket' %}" class="hidden sm:flex bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg shadow-blue-500/40 transition transform hover:scale-105 active:scale-95">
+                            + Ticket
+                        </a>
+
+                        <div class="h-6 w-px bg-slate-700 mx-2"></div>
+
+                        <div class="flex items-center gap-3">
+                            <div class="text-right hidden sm:block">
+                                <p class="text-xs font-bold text-white">{{ user.username }}</p>
+                                <p class="text-[10px] text-blue-400 font-bold uppercase">
+                                    {% if user.is_staff %}ADMIN TI{% else %}USUARIO{% endif %}
+                                </p>
+                            </div>
+                            
+                            <div class="h-9 w-9 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white border border-slate-600 shadow-md overflow-hidden ring-2 ring-transparent hover:ring-blue-500 transition cursor-pointer">
+                                {% if user.perfil.avatar %}
+                                    <img src="{{ user.perfil.avatar.url }}" class="h-full w-full object-cover">
+                                {% else %}
+                                    {{ user.username|slice:":2"|upper }}
+                                {% endif %}
+                            </div>
+
+                            <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="text-slate-400 hover:text-red-400 transition p-1.5 hover:bg-slate-800 rounded-full" title="Cerrar Sesión">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    
+    {% endif %}
+
+    <main class="flex-1 overflow-auto {% if not user.is_authenticated %}flex items-center justify-center bg-[#0f172a]{% else %}bg-slate-50{% endif %}">
+        <div class="{% if user.is_authenticated %}max-w-[1600px] mx-auto p-6 sm:p-8 w-full{% else %}w-full{% endif %}">
+            
+            {% if messages %}
+                <div class="fixed top-20 right-5 z-50 space-y-2">
+                    {% for message in messages %}
+                        <div class="bg-slate-800 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 border border-slate-700 animate-bounce">
+                            {% if message.tags == 'success' %}
+                                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            {% elif message.tags == 'error' %}
+                                <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            {% endif %}
+                            <span class="font-bold text-sm">{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+</body>
+</html>

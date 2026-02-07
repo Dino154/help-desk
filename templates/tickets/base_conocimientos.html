@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto">
+    
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-black text-slate-800 mb-4 tracking-tight">Base de Conocimientos </h1>
+        <p class="text-slate-500 text-lg font-medium">Encuentra soluciones rápidas antes de crear un ticket.</p>
+        
+        <form method="GET" class="mt-8 max-w-xl mx-auto relative group">
+            <svg class="w-6 h-6 absolute left-4 top-3.5 text-slate-400 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <input type="text" name="q" placeholder="Ej: Cómo configurar la impresora..." 
+                class="w-full pl-12 pr-4 py-4 rounded-full border-2 border-slate-100 bg-white shadow-sm focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition text-lg font-medium placeholder-slate-400"
+                value="{{ request.GET.q|default:'' }}">
+        </form>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {% for articulo in articulos %}
+            <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition duration-300 cursor-pointer group">
+                <div class="flex items-start justify-between">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-blue-600 transition">{{ articulo.titulo }}</h3>
+                    <span class="bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-1 rounded-full uppercase">Wiki</span>
+                </div>
+                <p class="text-slate-500 line-clamp-3 mb-4 text-sm leading-relaxed">{{ articulo.contenido }}</p>
+                <div class="flex justify-between items-center text-xs text-slate-400 font-bold uppercase tracking-wider border-t border-slate-50 pt-4">
+                    <span>{{ articulo.fecha_publicacion|date:"d M Y" }}</span>
+                    <span class="text-blue-500 flex items-center gap-1 group-hover:underline">
+                        Leer tutorial 
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </span>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-span-2 text-center py-16 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
+                <div class="inline-block p-4 rounded-full bg-white shadow-sm mb-4">
+                    <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <p class="text-slate-500 font-medium text-lg">No encontramos artículos con esa búsqueda.</p>
+                <p class="text-slate-400 text-sm">Intenta con otra palabra clave.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

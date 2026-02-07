@@ -1,0 +1,35 @@
+<div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer group relative">
+    <div class="flex justify-between items-start mb-2">
+        <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded">#{{ ticket.id }}</span>
+        {% if ticket.prioridad == 'CRITICA' %}
+            <span class="h-2 w-2 rounded-full bg-red-500 animate-pulse" title="Crítica"></span>
+        {% endif %}
+    </div>
+    <a href="{% url 'detalle_ticket' ticket.id %}" class="block font-bold text-slate-800 text-sm mb-2 group-hover:text-blue-600 line-clamp-2">
+        {{ ticket.titulo }}
+    </a>
+    
+    <div class="flex flex-wrap gap-1 mb-3">
+        {% for tag in ticket.etiquetas.all %}
+            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded text-white" style="background-color: {{ tag.color }};">
+                {{ tag.nombre }}
+            </span>
+        {% endfor %}
+    </div>
+
+    <div class="flex justify-between items-center mt-2 border-t border-slate-50 pt-2">
+        <div class="flex items-center gap-2">
+            <div class="h-5 w-5 rounded-full bg-slate-200 text-[8px] flex items-center justify-center font-bold text-slate-500 overflow-hidden">
+                {% if ticket.creado_por.perfil.avatar %}
+                    <img src="{{ ticket.creado_por.perfil.avatar.url }}" class="w-full h-full object-cover">
+                {% else %}
+                    {{ ticket.creado_por.username|slice:":1" }}
+                {% endif %}
+            </div>
+            <span class="text-[10px] text-slate-400 font-bold truncate max-w-[60px]">{{ ticket.creado_por.username }}</span>
+        </div>
+        {% if ticket.asignado_a %}
+            <span class="text-[9px] font-bold text-blue-500 bg-blue-50 px-1.5 rounded">Asig: {{ ticket.asignado_a.username }}</span>
+        {% endif %}
+    </div>
+</div>
