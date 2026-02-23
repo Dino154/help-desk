@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login 
-# --- IMPORTANTE: AGREGUÉ 'Proyecto' AQUÍ ---
 from .models import Ticket, Area, Comentario, PerfilUsuario, Articulo, HistorialTicket, Etiqueta, Proyecto
 from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
@@ -15,7 +14,6 @@ from django.contrib import messages
 from django.template.loader import get_template 
 from xhtml2pdf import pisa 
 from .forms import RegistroUsuarioForm, EditarUsuarioForm 
-# --- NUEVO IMPORT PARA FECHAS ---
 from django.utils import timezone
 import datetime
 
@@ -23,7 +21,6 @@ import datetime
 
 @login_required
 def lista_tickets(request):
-    # 1. Recuperamos proyectos visibles (EL ESCUDO)
     try:
         proyectos = Proyecto.objects.filter(visible=True)
     except:
@@ -64,6 +61,7 @@ def crear_ticket(request):
         descripcion = request.POST.get('descripcion')
         area_id = request.POST.get('area')
         prioridad = request.POST.get('prioridad')
+        categoria = request.POST.get('categoria') # <--- ¡NUEVO! ATRAPAMOS LA CATEGORÍA
         archivo = request.FILES.get('archivo')
         
         if area_id:
@@ -72,6 +70,7 @@ def crear_ticket(request):
                 titulo=titulo,
                 descripcion=descripcion,
                 area=area_obj,
+                categoria=categoria, # <--- ¡NUEVO! LO GUARDAMOS EN LA BD
                 prioridad=prioridad,
                 archivo=archivo,
                 creado_por=request.user 
@@ -81,14 +80,15 @@ def crear_ticket(request):
             HistorialTicket.objects.create(
                 ticket=nuevo_ticket, 
                 usuario=request.user, 
-                accion="Creó el ticket"
+                accion=f"Creó el ticket en la categoría {categoria}"
             )
             
-            # Notificación
+            # Notificación (Ahora incluye la categoría)
             asunto = f'🔥 Nuevo Ticket #{nuevo_ticket.id}: {titulo}'
             mensaje = f"""
             El usuario {request.user.username} ha reportado una incidencia.
             
+            Categoría: {categoria}
             Prioridad: {prioridad}
             Área: {area_obj.nombre}
             
@@ -273,7 +273,7 @@ def eliminar_usuario(request, pk):
         return redirect('gestion_usuarios')
     return render(request, 'tickets/eliminar_usuario.html', {'usuario': usuario_a_borrar})
 
-# --- REPORTES Y EXPORTACIÓN (ACTUALIZADO CON FILTROS DE FECHA) ---
+# --- REPORTES Y EXPORTACIÓN ---
 
 @staff_member_required
 def reportes(request):
@@ -318,7 +318,6 @@ def reportes(request):
         'critica': critica, 
         'labels_areas': labels_areas, 
         'data_areas': data_areas,
-        # Devolvemos las fechas para que el input no se borre
         'fecha_inicio': fecha_inicio,
         'fecha_fin': fecha_fin
     }
@@ -329,16 +328,17 @@ def exportar_excel(request):
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Tickets HelpDesk"
-    headers = ["ID", "Asunto", "Usuario", "Área", "Prioridad", "Estado", "Fecha"]
+    headers = ["ID", "Asunto", "Usuario", "Área", "Categoría", "Prioridad", "Estado", "Fecha"]
     ws.append(headers)
     tickets = Ticket.objects.all().order_by('-fecha_creacion')
     for t in tickets:
         fecha_simple = t.fecha_creacion.replace(tzinfo=None)
-        ws.append([t.id, t.titulo, t.creado_por.username, t.area.nombre, t.get_prioridad_display(), t.get_estado_display(), fecha_simple])
+        ws.append([t.id, t.titulo, t.creado_por.username, t.area.nombre, t.get_categoria_display(), t.get_prioridad_display(), t.get_estado_display(), fecha_simple])
     ws.column_dimensions['B'].width = 40
     ws.column_dimensions['C'].width = 20
     ws.column_dimensions['D'].width = 20
-    ws.column_dimensions['G'].width = 20
+    ws.column_dimensions['E'].width = 20
+    ws.column_dimensions['H'].width = 20
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename="Reporte_Tickets.xlsx"'
     wb.save(response)

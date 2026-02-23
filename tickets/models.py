@@ -33,10 +33,23 @@ class Ticket(models.Model):
         ('CANCELADO', 'Cancelado'),
     ]
 
+    # --- NUEVO: OPCIONES DE CATEGORÍA ---
+    CATEGORIA_CHOICES = [
+        ('SOFTWARE', '💻 Software / Aplicaciones'),
+        ('HARDWARE', '🔌 Hardware / Equipos'),
+        ('REDES', '🌐 Redes e Internet'),
+        ('ACCESOS', '🔐 Accesos y Contraseñas'),
+        ('OTROS', '📁 Otros'),
+    ]
+
     titulo = models.CharField(max_length=200, verbose_name="Asunto del Problema")
     descripcion = models.TextField(verbose_name="Descripción detallada")
     archivo = models.ImageField(upload_to='tickets/', blank=True, null=True, verbose_name="Captura de Pantalla")
     area = models.ForeignKey(Area, on_delete=models.CASCADE, related_name='tickets')
+    
+    # --- NUEVO: CAMPO CATEGORÍA EN LA BASE DE DATOS ---
+    categoria = models.CharField(max_length=20, choices=CATEGORIA_CHOICES, default='SOFTWARE', verbose_name="Categoría")
+    
     prioridad = models.CharField(max_length=10, choices=PRIORIDAD_CHOICES, default='MEDIA')
     estado = models.CharField(max_length=15, choices=ESTADO_CHOICES, default='PENDIENTE')
     creado_por = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mis_tickets')
@@ -105,8 +118,6 @@ class Articulo(models.Model):
     
     def __str__(self):
         return self.titulo
-
-# ... (tus otros modelos)
 
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=100, verbose_name="Nombre del Proyecto")
