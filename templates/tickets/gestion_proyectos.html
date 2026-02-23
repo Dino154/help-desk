@@ -1,65 +1,90 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto space-y-8">
-    <h1 class="text-3xl font-black text-slate-800"> Proyectos Activos</h1>
+<div class="max-w-4xl mx-auto space-y-6 sm:space-y-8 px-4 sm:px-0">
+    
+    <div class="mt-2 sm:mt-0">
+        <h1 class="text-2xl sm:text-3xl font-black text-slate-800 tracking-tight">Proyectos Activos</h1>
+        <p class="text-sm text-slate-500 font-medium mt-1">Gestiona los proyectos visibles para los usuarios.</p>
+    </div>
 
-    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-        <h3 class="font-bold text-slate-700 mb-4">Agregar Nuevo Proyecto</h3>
-        <form method="POST" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
+    <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200">
+        <h3 class="font-bold text-slate-700 mb-4 sm:mb-5">Agregar Nuevo Proyecto</h3>
+        
+        <form method="POST" class="grid grid-cols-1 md:grid-cols-5 gap-4 sm:gap-5 items-end">
             {% csrf_token %}
+            
             <div class="md:col-span-2">
-                <label class="text-xs font-bold text-slate-400 uppercase">Nombre</label>
-                <input type="text" name="nombre" placeholder="Ej: Web Telecable" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm">
+                <label class="block text-[11px] sm:text-xs font-bold text-slate-400 uppercase mb-1.5">Nombre del Proyecto</label>
+                <input type="text" name="nombre" placeholder="Ej: Web Telecable" required class="w-full border border-slate-200 rounded-xl px-4 py-2.5 sm:py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition">
             </div>
+            
             <div>
-                <label class="text-xs font-bold text-slate-400 uppercase">% Avance</label>
-                <input type="number" name="progreso" placeholder="0-100" min="0" max="100" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm">
+                <label class="block text-[11px] sm:text-xs font-bold text-slate-400 uppercase mb-1.5">% Avance</label>
+                <input type="number" name="progreso" placeholder="0-100" min="0" max="100" required class="w-full border border-slate-200 rounded-xl px-4 py-2.5 sm:py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition">
             </div>
+            
             <div class="md:col-span-2">
-                <label class="text-xs font-bold text-slate-400 uppercase">Estado / Nota</label>
-                <div class="flex gap-2">
-                    <input type="text" name="estado" placeholder="Ej: Falta módulo X" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm">
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-500">+</button>
+                <label class="block text-[11px] sm:text-xs font-bold text-slate-400 uppercase mb-1.5">Estado / Nota</label>
+                <div class="flex flex-col md:flex-row gap-3 md:gap-2">
+                    <input type="text" name="estado" placeholder="Ej: Falta módulo X" required class="w-full border border-slate-200 rounded-xl px-4 py-2.5 sm:py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition">
+                    <button type="submit" class="hidden md:block bg-blue-600 text-white px-5 py-2 rounded-xl font-bold hover:bg-blue-500 transition shadow-sm hover:shadow-md transform active:scale-95 shrink-0">+</button>
                 </div>
             </div>
+            
             <div class="md:col-span-5">
-                 <label class="text-xs font-bold text-slate-400 uppercase">Tiempo Estimado (Opcional)</label>
-                 <input type="text" name="tiempo" placeholder="Ej: 2 semanas" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm">
+                 <label class="block text-[11px] sm:text-xs font-bold text-slate-400 uppercase mb-1.5">Tiempo Estimado (Opcional)</label>
+                 <input type="text" name="tiempo" placeholder="Ej: 2 semanas" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 sm:py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition">
+            </div>
+
+            <div class="md:hidden mt-2">
+                <button type="submit" class="w-full bg-blue-600 text-white px-4 py-3 rounded-xl font-bold transition shadow-md active:scale-95 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    Agregar Proyecto
+                </button>
             </div>
         </form>
     </div>
 
     <div class="grid grid-cols-1 gap-4">
         {% for p in proyectos %}
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 md:gap-6 hover:border-blue-200 transition group">
+            
             <div class="flex-1 w-full">
-                <div class="flex justify-between mb-2">
-                    <h3 class="font-black text-slate-800 text-lg">{{ p.nombre }}</h3>
-                    <span class="font-bold text-blue-600">{{ p.progreso }}%</span>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-1">
+                    <h3 class="font-black text-slate-800 text-lg sm:text-xl">{{ p.nombre }}</h3>
+                    <span class="font-bold text-blue-600 text-sm sm:text-base">{{ p.progreso }}% Completado</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
-                    <div class="bg-blue-500 h-3 rounded-full transition-all duration-500" style="width: {{ p.progreso }}%"></div>
+                
+                <div class="w-full bg-slate-100 rounded-full h-2.5 sm:h-3 overflow-hidden shadow-inner">
+                    <div class="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-1000 ease-out" style="width: {{ p.progreso }}%"></div>
                 </div>
-                <div class="mt-3 flex gap-4 text-sm">
-                    <span class="text-slate-600"> {{ p.estado_texto }}</span>
+                
+                <div class="mt-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm">
+                    <span class="text-slate-600 bg-slate-50 px-3 py-1 rounded-lg border border-slate-100 font-medium">📋 {{ p.estado_texto }}</span>
                     {% if p.tiempo_estimado %}
-                        <span class="text-orange-500 font-bold"> {{ p.tiempo_estimado }}</span>
+                        <span class="text-orange-600 bg-orange-50 border border-orange-100 px-3 py-1 rounded-lg font-bold">⏳ {{ p.tiempo_estimado }}</span>
                     {% endif %}
                 </div>
             </div>
             
-            <form method="POST">
+            <form method="POST" class="w-full md:w-auto">
                 {% csrf_token %}
                 <input type="hidden" name="delete_id" value="{{ p.id }}">
-                <button type="submit" class="text-red-400 hover:text-red-600 font-bold text-xs border border-red-100 hover:bg-red-50 px-3 py-2 rounded-lg transition">
-                    Eliminar
+                <button type="submit" class="w-full md:w-auto text-red-500 hover:text-white hover:bg-red-500 font-bold text-xs sm:text-sm border border-red-200 bg-red-50 px-4 py-2.5 sm:py-2 rounded-xl transition text-center opacity-100 md:opacity-0 md:group-hover:opacity-100 flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    <span class="md:hidden">Eliminar</span>
                 </button>
             </form>
+
         </div>
         {% empty %}
-        <p class="text-center text-slate-400 py-10">No hay proyectos activos para mostrar.</p>
+        <div class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl py-12 text-center">
+            <svg class="mx-auto h-12 w-12 text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            <p class="font-medium text-slate-500">No hay proyectos activos en este momento.</p>
+        </div>
         {% endfor %}
     </div>
+
 </div>
 {% endblock %}

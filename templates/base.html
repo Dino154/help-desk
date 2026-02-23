@@ -23,7 +23,7 @@
 
     {% if user.is_authenticated %}
     
-        <nav class="glass-nav text-white shadow-lg z-50 w-full shrink-0">
+        <nav class="glass-nav text-white shadow-lg z-50 w-full shrink-0 relative">
             <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
                     
@@ -44,7 +44,7 @@
 
                             {% if user.is_staff %}
                             <a href="{% url 'tablero_kanban' %}" class="hover:bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-2 group">
-                                <svg class="w-4 h-4 text-purple-400 group-hover:text-purple-300 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path></svg>
+                                <svg class="w-4 h-4 text-purple-400 group-hover:text-purple-300 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path></svg>
                                 Tablero
                             </a>
                             {% endif %}
@@ -78,7 +78,7 @@
                             + Ticket
                         </a>
 
-                        <div class="h-6 w-px bg-slate-700 mx-2"></div>
+                        <div class="hidden sm:block h-6 w-px bg-slate-700 mx-2"></div>
 
                         <div class="flex items-center gap-3">
                             <div class="text-right hidden sm:block">
@@ -96,14 +96,67 @@
                                 {% endif %}
                             </div>
 
-                            <form action="{% url 'logout' %}" method="post">
+                            <form action="{% url 'logout' %}" method="post" class="hidden sm:block">
                                 {% csrf_token %}
                                 <button type="submit" class="text-slate-400 hover:text-red-400 transition p-1.5 hover:bg-slate-800 rounded-full" title="Cerrar Sesión">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                                 </button>
                             </form>
+
+                            <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white focus:outline-none p-2 rounded-md hover:bg-slate-800">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                            </button>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-slate-800 absolute w-full left-0 z-40 shadow-xl">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
+                    <a href="{% url 'lista_tickets' %}" class="text-slate-300 hover:bg-slate-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium flex items-center gap-3">
+                        <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                        Tickets
+                    </a>
+                    <a href="{% url 'crear_ticket' %}" class="text-blue-400 hover:bg-slate-800 block px-3 py-2 rounded-md text-base font-bold flex items-center gap-3 sm:hidden">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        Crear Ticket
+                    </a>
+
+                    {% if user.is_staff %}
+                    <a href="{% url 'tablero_kanban' %}" class="text-slate-300 hover:bg-slate-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium flex items-center gap-3">
+                        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path></svg>
+                        Tablero
+                    </a>
+                    {% endif %}
+
+                    <a href="{% url 'base_conocimientos' %}" class="text-slate-300 hover:bg-slate-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium flex items-center gap-3">
+                        <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                        Wiki
+                    </a>
+
+                    {% if user.is_staff %}
+                        <a href="{% url 'gestion_usuarios' %}" class="text-slate-300 hover:bg-slate-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium flex items-center gap-3">
+                            <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                            Usuarios
+                        </a>
+                        <a href="{% url 'reportes' %}" class="text-slate-300 hover:bg-slate-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium flex items-center gap-3">
+                            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                            Reportes
+                        </a>
+                        <a href="{% url 'gestion_proyectos' %}" class="text-slate-300 hover:bg-slate-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                            Proyectos
+                        </a>
+                    {% endif %}
+                    
+                    <div class="border-t border-slate-700 my-2"></div>
+                    <form action="{% url 'logout' %}" method="post" class="block w-full">
+                        {% csrf_token %}
+                        <button type="submit" class="text-red-400 hover:bg-slate-800 w-full text-left px-3 py-2 rounded-md text-base font-medium flex items-center gap-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                            Cerrar Sesión
+                        </button>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -111,7 +164,7 @@
     {% endif %}
 
     <main class="flex-1 overflow-auto {% if not user.is_authenticated %}flex items-center justify-center bg-[#0f172a]{% else %}bg-slate-50{% endif %}">
-        <div class="{% if user.is_authenticated %}max-w-[1600px] mx-auto p-6 sm:p-8 w-full{% else %}w-full{% endif %}">
+        <div class="{% if user.is_authenticated %}max-w-[1600px] mx-auto p-4 sm:p-6 lg:p-8 w-full{% else %}w-full{% endif %}">
             
             {% if messages %}
                 <div class="fixed top-20 right-5 z-50 space-y-2">
@@ -132,6 +185,17 @@
             {% endblock %}
         </div>
     </main>
+
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        if(btn && menu) {
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+        }
+    </script>
 
 </body>
 </html>

@@ -2,65 +2,65 @@
 
 {% block content %}
 
-<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8 px-2 sm:px-0">
     
-    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center transition hover:shadow-md">
-        <div class="p-3 bg-blue-50 rounded-xl text-blue-600 mr-4">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+    <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center transition hover:shadow-md">
+        <div class="p-3 bg-blue-50 rounded-xl text-blue-600 mr-4 shrink-0">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
         </div>
         <div>
-            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Total Tickets</p>
-            <h3 class="text-2xl font-black text-slate-800">{{ total_tickets }}</h3>
+            <p class="text-slate-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider">Total Tickets</p>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-800">{{ total_tickets }}</h3>
         </div>
     </div>
 
-    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center transition hover:shadow-md">
-        <div class="p-3 bg-red-50 rounded-xl text-red-600 mr-4">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+    <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center transition hover:shadow-md">
+        <div class="p-3 bg-red-50 rounded-xl text-red-600 mr-4 shrink-0">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
         </div>
         <div>
-            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Críticos</p>
-            <h3 class="text-2xl font-black text-slate-800">{{ criticos }}</h3>
+            <p class="text-slate-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider">Críticos</p>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-800">{{ criticos }}</h3>
         </div>
     </div>
     
-    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center transition hover:shadow-md">
-        <div class="p-3 bg-green-50 rounded-xl text-green-600 mr-4">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center transition hover:shadow-md">
+        <div class="p-3 bg-green-50 rounded-xl text-green-600 mr-4 shrink-0">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         </div>
         <div>
-            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Resueltos</p>
-            <h3 class="text-2xl font-black text-slate-800">{{ resueltos }}</h3>
+            <p class="text-slate-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider">Resueltos</p>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-800">{{ resueltos }}</h3>
         </div>
     </div>
 
-    <a href="{% url 'reportes' %}" class="bg-slate-900 p-6 rounded-2xl shadow-lg flex items-center justify-between text-white hover:bg-slate-800 transition cursor-pointer group">
+    <a href="{% url 'reportes' %}" class="bg-slate-900 p-5 sm:p-6 rounded-2xl shadow-lg flex items-center justify-between text-white hover:bg-slate-800 transition cursor-pointer group">
         <div>
-            <p class="text-blue-300 text-xs font-bold uppercase tracking-wider group-hover:text-blue-200">Acción Rápida</p>
-            <h3 class="text-lg font-bold">Ver Métricas</h3>
+            <p class="text-blue-300 text-[10px] sm:text-xs font-bold uppercase tracking-wider group-hover:text-blue-200">Acción Rápida</p>
+            <h3 class="text-base sm:text-lg font-bold">Ver Métricas</h3>
         </div>
-        <div class="bg-blue-600 group-hover:bg-blue-500 p-3 rounded-xl transition shadow-lg shadow-blue-900/50">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        <div class="bg-blue-600 group-hover:bg-blue-500 p-3 rounded-xl transition shadow-lg shadow-blue-900/50 shrink-0">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
         </div>
     </a>
 </div>
 
-<div class="bg-white shadow-lg rounded-2xl border border-slate-100 overflow-hidden">
+<div class="bg-white shadow-lg rounded-2xl border border-slate-100 overflow-hidden mx-2 sm:mx-0">
     
-    <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div class="px-5 sm:px-6 py-4 sm:py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h3 class="font-bold text-slate-800 text-lg">Incidencias Recientes</h3>
         
-        <div class="flex items-center gap-3 w-full sm:w-auto">
+        <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
             {% if user.is_staff %}
-                <a href="{% url 'exportar_excel' %}" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition shadow-sm hover:shadow-md">
+                <a href="{% url 'exportar_excel' %}" class="bg-green-600 hover:bg-green-500 text-white px-3 sm:px-4 py-2 sm:py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition shadow-sm hover:shadow-md shrink-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    Excel
+                    <span class="hidden sm:inline">Excel</span>
                 </a>
             {% endif %}
 
-            <form method="GET" class="relative flex-1 sm:w-64">
+            <form method="GET" class="relative flex-1 w-full sm:w-64">
                 <input type="text" name="q" placeholder="Buscar ID, asunto..." value="{{ request.GET.q|default:'' }}"
-                    class="w-full border border-slate-200 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition shadow-sm">
+                    class="w-full border border-slate-200 rounded-lg pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 text-xs sm:text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition shadow-sm bg-slate-50 focus:bg-white">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
@@ -68,80 +68,81 @@
         </div>
     </div>
     
-    <table class="w-full text-left border-collapse">
-        <thead>
-            <tr class="bg-slate-50 text-slate-500 uppercase text-xs font-bold tracking-wider">
-                <th class="p-4 border-b border-slate-100">ID</th>
-                <th class="p-4 border-b border-slate-100">Asunto</th>
-                <th class="p-4 border-b border-slate-100">Solicitante</th>
-                <th class="p-4 border-b border-slate-100 text-center">Prioridad</th>
-                <th class="p-4 border-b border-slate-100 text-center">Estado</th>
-                <th class="p-4 border-b border-slate-100 text-right">Acción</th>
-            </tr>
-        </thead>
-        <tbody class="text-sm text-slate-700 divide-y divide-slate-50">
-            {% for ticket in tickets %}
-            <tr class="hover:bg-blue-50/30 transition duration-150">
-                <td class="p-4 font-mono text-xs text-slate-400">#{{ ticket.id }}</td>
-                <td class="p-4 font-bold text-slate-800">
-                    {{ ticket.titulo }}
-                    <div class="text-xs text-slate-400 font-normal mt-1 flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
-                        {{ ticket.area.nombre }}
-                    </div>
-                </td>
-                <td class="p-4">
-                    <div class="flex items-center">
-                        <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-600 mr-3">
-                            {{ ticket.creado_por.username|slice:":1"|upper }}
+    <div class="overflow-x-auto w-full">
+        <table class="w-full text-left border-collapse min-w-[700px]"> <thead>
+                <tr class="bg-slate-50 text-slate-500 uppercase text-[10px] sm:text-xs font-bold tracking-wider">
+                    <th class="px-4 py-3 sm:p-4 border-b border-slate-100">ID</th>
+                    <th class="px-4 py-3 sm:p-4 border-b border-slate-100">Asunto</th>
+                    <th class="px-4 py-3 sm:p-4 border-b border-slate-100">Solicitante</th>
+                    <th class="px-4 py-3 sm:p-4 border-b border-slate-100 text-center">Prioridad</th>
+                    <th class="px-4 py-3 sm:p-4 border-b border-slate-100 text-center">Estado</th>
+                    <th class="px-4 py-3 sm:p-4 border-b border-slate-100 text-right">Acción</th>
+                </tr>
+            </thead>
+            <tbody class="text-xs sm:text-sm text-slate-700 divide-y divide-slate-50">
+                {% for ticket in tickets %}
+                <tr class="hover:bg-blue-50/30 transition duration-150 group">
+                    <td class="px-4 py-3 sm:p-4 font-mono text-[10px] sm:text-xs text-slate-400">#{{ ticket.id }}</td>
+                    <td class="px-4 py-3 sm:p-4 font-bold text-slate-800">
+                        <span class="line-clamp-2 sm:line-clamp-1">{{ ticket.titulo }}</span>
+                        <div class="text-[10px] sm:text-xs text-slate-400 font-normal mt-1 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                            <span class="truncate max-w-[120px] sm:max-w-none">{{ ticket.area.nombre }}</span>
                         </div>
-                        <span class="font-medium">{{ ticket.creado_por.username }}</span>
-                    </div>
-                </td>
-                <td class="p-4 text-center">
-                    {% if ticket.prioridad == 'CRITICA' %}
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-800 border border-red-200">
-                            <span class="w-1.5 h-1.5 bg-red-600 rounded-full mr-1.5 animate-pulse"></span> Crítica
-                        </span>
-                    {% elif ticket.prioridad == 'ALTA' %}
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-orange-100 text-orange-800 border border-orange-200">
-                            Alta
-                        </span>
-                    {% else %}
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-100">
-                            Normal
-                        </span>
-                    {% endif %}
-                </td>
-                <td class="p-4 text-center">
-                    <span class="px-3 py-1 rounded-full text-xs font-bold border
-                        {% if ticket.estado == 'RESUELTO' %} bg-green-50 text-green-700 border-green-200
-                        {% elif ticket.estado == 'EN_PROCESO' %} bg-blue-50 text-blue-700 border-blue-200
-                        {% else %} bg-slate-100 text-slate-500 border-slate-200 {% endif %}">
-                        {{ ticket.get_estado_display }}
-                    </span>
-                </td>
-                <td class="p-4 text-right">
-                    <a href="{% url 'detalle_ticket' ticket.id %}" class="text-blue-600 hover:text-white border border-blue-200 hover:bg-blue-600 font-bold text-xs uppercase tracking-wide px-3 py-1.5 rounded-lg transition-colors">
-                        Ver Detalles
-                    </a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="6" class="p-12 text-center">
-                    <div class="flex flex-col items-center justify-center text-slate-400">
-                        <svg class="w-12 h-12 mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <p class="font-medium">No se encontraron tickets con ese criterio.</p>
-                        {% if request.GET.q %}
-                            <a href="{% url 'lista_tickets' %}" class="text-blue-600 hover:underline mt-2 text-sm">Borrar búsqueda</a>
+                    </td>
+                    <td class="px-4 py-3 sm:p-4">
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-slate-200 flex items-center justify-center text-[10px] sm:text-xs font-bold text-slate-600 mr-2 sm:mr-3 shrink-0">
+                                {{ ticket.creado_por.username|slice:":1"|upper }}
+                            </div>
+                            <span class="font-medium truncate max-w-[80px] sm:max-w-none">{{ ticket.creado_por.username }}</span>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 sm:p-4 text-center">
+                        {% if ticket.prioridad == 'CRITICA' %}
+                            <span class="inline-flex items-center px-2 py-0.5 sm:px-2.5 rounded-full text-[10px] sm:text-xs font-bold bg-red-100 text-red-800 border border-red-200">
+                                <span class="w-1.5 h-1.5 bg-red-600 rounded-full mr-1 sm:mr-1.5 animate-pulse"></span> Crítica
+                            </span>
+                        {% elif ticket.prioridad == 'ALTA' %}
+                            <span class="inline-flex items-center px-2 py-0.5 sm:px-2.5 rounded-full text-[10px] sm:text-xs font-bold bg-orange-100 text-orange-800 border border-orange-200">
+                                Alta
+                            </span>
+                        {% else %}
+                            <span class="inline-flex items-center px-2 py-0.5 sm:px-2.5 rounded-full text-[10px] sm:text-xs font-bold bg-blue-50 text-blue-700 border border-blue-100">
+                                Normal
+                            </span>
                         {% endif %}
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    </td>
+                    <td class="px-4 py-3 sm:p-4 text-center">
+                        <span class="px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold border
+                            {% if ticket.estado == 'RESUELTO' %} bg-green-50 text-green-700 border-green-200
+                            {% elif ticket.estado == 'EN_PROCESO' %} bg-blue-50 text-blue-700 border-blue-200
+                            {% else %} bg-slate-100 text-slate-500 border-slate-200 {% endif %}">
+                            {{ ticket.get_estado_display }}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 sm:p-4 text-right">
+                        <a href="{% url 'detalle_ticket' ticket.id %}" class="inline-block text-blue-600 hover:text-white border border-blue-200 hover:bg-blue-600 font-bold text-[10px] sm:text-xs uppercase tracking-wide px-2 sm:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">
+                            Ver
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="p-8 sm:p-12 text-center">
+                        <div class="flex flex-col items-center justify-center text-slate-400">
+                            <svg class="w-10 h-10 sm:w-12 sm:h-12 mb-3 sm:mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <p class="font-medium text-sm">No se encontraron tickets con ese criterio.</p>
+                            {% if request.GET.q %}
+                                <a href="{% url 'lista_tickets' %}" class="text-blue-600 hover:underline mt-2 text-xs sm:text-sm">Borrar búsqueda</a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 {% endblock %}

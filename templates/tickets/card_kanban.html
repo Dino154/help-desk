@@ -1,35 +1,49 @@
-<div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer group relative">
-    <div class="flex justify-between items-start mb-2">
-        <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded">#{{ ticket.id }}</span>
+<div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200 hover:shadow-lg hover:border-blue-200 transition-all duration-300 group relative flex flex-col h-full">
+    
+    <div class="flex justify-between items-start mb-2.5">
+        <span class="bg-slate-100 text-slate-500 text-[11px] sm:text-xs font-black px-2 py-1 rounded-md tracking-wider">
+            #{{ ticket.id }}
+        </span>
         {% if ticket.prioridad == 'CRITICA' %}
-            <span class="h-2 w-2 rounded-full bg-red-500 animate-pulse" title="Crítica"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.6)]" title="Urgencia Crítica"></span>
         {% endif %}
     </div>
-    <a href="{% url 'detalle_ticket' ticket.id %}" class="block font-bold text-slate-800 text-sm mb-2 group-hover:text-blue-600 line-clamp-2">
+    
+    <a href="{% url 'detalle_ticket' ticket.id %}" class="block font-bold text-slate-800 text-sm sm:text-base mb-3 group-hover:text-blue-600 line-clamp-2 transition-colors before:absolute before:inset-0 z-0">
         {{ ticket.titulo }}
     </a>
     
-    <div class="flex flex-wrap gap-1 mb-3">
+    <div class="flex flex-wrap gap-1.5 mb-4 mt-auto relative z-10 pointer-events-none">
         {% for tag in ticket.etiquetas.all %}
-            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded text-white" style="background-color: {{ tag.color }};">
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-md text-white shadow-sm" style="background-color: {{ tag.color }};">
                 {{ tag.nombre }}
             </span>
         {% endfor %}
     </div>
 
-    <div class="flex justify-between items-center mt-2 border-t border-slate-50 pt-2">
+    <div class="flex justify-between items-center pt-3 border-t border-slate-100 relative z-10 pointer-events-none">
+        
         <div class="flex items-center gap-2">
-            <div class="h-5 w-5 rounded-full bg-slate-200 text-[8px] flex items-center justify-center font-bold text-slate-500 overflow-hidden">
+            <div class="h-6 w-6 rounded-full bg-slate-200 text-[10px] flex items-center justify-center font-black text-slate-500 overflow-hidden ring-2 ring-white shadow-sm">
                 {% if ticket.creado_por.perfil.avatar %}
                     <img src="{{ ticket.creado_por.perfil.avatar.url }}" class="w-full h-full object-cover">
                 {% else %}
-                    {{ ticket.creado_por.username|slice:":1" }}
+                    {{ ticket.creado_por.username|slice:":2"|upper }}
                 {% endif %}
             </div>
-            <span class="text-[10px] text-slate-400 font-bold truncate max-w-[60px]">{{ ticket.creado_por.username }}</span>
+            <span class="text-[11px] text-slate-500 font-bold truncate max-w-[70px] sm:max-w-[90px]">
+                {{ ticket.creado_por.username }}
+            </span>
         </div>
+        
         {% if ticket.asignado_a %}
-            <span class="text-[9px] font-bold text-blue-500 bg-blue-50 px-1.5 rounded">Asig: {{ ticket.asignado_a.username }}</span>
+            <span class="text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2 py-1 rounded-lg truncate max-w-[80px]" title="{{ ticket.asignado_a.username }}">
+                Asig: {{ ticket.asignado_a.username }}
+            </span>
+        {% else %}
+            <span class="text-[10px] font-bold text-slate-400 bg-slate-50 border border-slate-100 px-2 py-1 rounded-lg">
+                Sin Asignar
+            </span>
         {% endif %}
     </div>
 </div>

@@ -2,81 +2,151 @@
 <html>
 <head>
     <style>
-        /* --- ELIMINAMOS EL BLOQUE @PAGE QUE DABA ERROR --- */
-        
+        /* Estilos optimizados para impresión A4 */
         body { 
-            font-family: Helvetica, sans-serif; 
-            color: #333; 
-            line-height: 1.5; 
-            /* Añadimos margenes aquí en lugar de @page */
-            padding: 40px; 
+            font-family: Helvetica, Arial, sans-serif; 
+            color: #1e293b; 
+            line-height: 1.4; 
+            padding: 20px; 
         }
         
-        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #0f172a; padding-bottom: 10px; }
-        .header h1 { color: #0f172a; margin: 0; font-size: 24px; text-transform: uppercase; }
-        .header p { color: #666; font-size: 12px; margin-top: 5px; }
-
-        /* KPI BOXES */
-        .kpi-table { width: 100%; margin-bottom: 30px; border-spacing: 10px; }
-        .kpi-box { 
-            background-color: #f1f5f9; 
-            padding: 15px; 
+        .header { 
             text-align: center; 
-            border-radius: 8px; 
+            margin-bottom: 25px; 
+            border-bottom: 3px solid #0f172a; 
+            padding-bottom: 15px; 
+        }
+        .header h1 { 
+            color: #0f172a; 
+            margin: 0; 
+            font-size: 26px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+        }
+        .header p { 
+            color: #64748b; 
+            font-size: 11px; 
+            margin-top: 8px; 
+            font-weight: bold;
+        }
+
+        /* KPI BOXES (Resumen numérico) */
+        .kpi-table { 
+            width: 100%; 
+            margin-bottom: 30px; 
+        }
+        .kpi-box { 
+            background-color: #f8fafc; 
+            padding: 12px; 
+            text-align: center; 
+            border-radius: 10px; 
             border: 1px solid #e2e8f0;
         }
-        .kpi-number { font-size: 24px; font-weight: bold; color: #0f172a; display: block; }
-        .kpi-label { font-size: 10px; text-transform: uppercase; color: #64748b; font-weight: bold; }
+        .kpi-number { 
+            font-size: 22px; 
+            font-weight: bold; 
+            color: #0f172a; 
+            display: block; 
+        }
+        .kpi-label { 
+            font-size: 9px; 
+            text-transform: uppercase; 
+            color: #64748b; 
+            font-weight: bold; 
+            margin-top: 4px;
+        }
 
-        /* TABLA PRINCIPAL */
-        .main-table { width: 100%; border-collapse: collapse; font-size: 11px; }
-        .main-table th { background-color: #0f172a; color: white; padding: 8px; text-align: left; }
-        .main-table td { border-bottom: 1px solid #e2e8f0; padding: 8px; }
-        .main-table tr:nth-child(even) { background-color: #f8fafc; }
+        /* TABLA DE CONTENIDO */
+        .table-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 10px;
+            border-left: 5px solid #3b82f6;
+            padding-left: 10px;
+        }
+
+        .main-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            font-size: 10px; 
+        }
+        .main-table th { 
+            background-color: #0f172a; 
+            color: #ffffff; 
+            padding: 10px 8px; 
+            text-align: left; 
+            text-transform: uppercase;
+        }
+        .main-table td { 
+            border-bottom: 1px solid #f1f5f9; 
+            padding: 10px 8px; 
+            vertical-align: middle;
+        }
+        .main-table tr:nth-child(even) { 
+            background-color: #fcfdfe; 
+        }
         
-        /* COLORES DE ESTADO */
-        .status-resuelto { color: #166534; font-weight: bold; }
-        .status-critico { color: #991b1b; font-weight: bold; }
-        .status-pendiente { color: #854d0e; }
+        /* INDICADORES DE ESTADO */
+        .status-resuelto { color: #15803d; font-weight: bold; }
+        .status-critico { color: #b91c1c; font-weight: bold; }
+        .status-proceso { color: #1d4ed8; font-weight: bold; }
+        .status-pendiente { color: #a16207; font-weight: bold; }
 
-        .footer { margin-top: 50px; text-align: center; font-size: 10px; color: #94a3b8; }
+        .footer { 
+            margin-top: 40px; 
+            text-align: center; 
+            font-size: 9px; 
+            color: #94a3b8; 
+            border-top: 1px solid #e2e8f0;
+            padding-top: 10px;
+        }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>Reporte de Incidencias</h1>
-        <p>Generado por: {{ usuario.username }} | Fecha: {% now "d/m/Y H:i" %}</p>
+        <h1>Help Desk TI Enterprise</h1>
+        <p>REPORTE EJECUTIVO DE INCIDENCIAS</p>
+        <p>Generado por: {{ usuario.username }} | Fecha de emisión: {% now "d/m/Y H:i" %}</p>
     </div>
 
     <table class="kpi-table">
         <tr>
-            <td class="kpi-box">
-                <span class="kpi-number">{{ pendientes }}</span>
-                <span class="kpi-label">Pendientes</span>
+            <td width="25%">
+                <div class="kpi-box">
+                    <span class="kpi-number">{{ pendientes }}</span>
+                    <span class="kpi-label">Pendientes</span>
+                </div>
             </td>
-            <td class="kpi-box">
-                <span class="kpi-number">{{ proceso }}</span>
-                <span class="kpi-label">En Proceso</span>
+            <td width="25%">
+                <div class="kpi-box">
+                    <span class="kpi-number">{{ proceso }}</span>
+                    <span class="kpi-label">En Proceso</span>
+                </div>
             </td>
-            <td class="kpi-box">
-                <span class="kpi-number" style="color: #16a34a;">{{ resueltos }}</span>
-                <span class="kpi-label">Resueltos</span>
+            <td width="25%">
+                <div class="kpi-box" style="border-bottom: 3px solid #22c55e;">
+                    <span class="kpi-number" style="color: #16a34a;">{{ resueltos }}</span>
+                    <span class="kpi-label">Resueltos</span>
+                </div>
             </td>
-            <td class="kpi-box">
-                <span class="kpi-number" style="color: #dc2626;">{{ criticos }}</span>
-                <span class="kpi-label">Críticos</span>
+            <td width="25%">
+                <div class="kpi-box" style="border-bottom: 3px solid #ef4444;">
+                    <span class="kpi-number" style="color: #dc2626;">{{ criticos }}</span>
+                    <span class="kpi-label">Prioridad Crítica</span>
+                </div>
             </td>
         </tr>
     </table>
 
-    <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">Detalle de Tickets</h3>
+    <div class="table-title">Detalle General de Tickets</div>
 
     <table class="main-table">
         <thead>
             <tr>
-                <th width="5%">ID</th>
-                <th width="35%">Asunto</th>
+                <th width="8%">ID</th>
+                <th width="32%">Asunto</th>
                 <th width="15%">Área</th>
                 <th width="15%">Solicitante</th>
                 <th width="15%">Prioridad</th>
@@ -86,8 +156,8 @@
         <tbody>
             {% for t in tickets %}
             <tr>
-                <td>#{{ t.id }}</td>
-                <td>{{ t.titulo }}</td>
+                <td style="font-family: monospace;">#{{ t.id }}</td>
+                <td><b style="color: #334155;">{{ t.titulo }}</b></td>
                 <td>{{ t.area.nombre }}</td>
                 <td>{{ t.creado_por.username }}</td>
                 <td>
@@ -100,6 +170,10 @@
                 <td>
                     {% if t.estado == 'RESUELTO' %}
                         <span class="status-resuelto">RESUELTO</span>
+                    {% elif t.estado == 'EN_PROCESO' %}
+                        <span class="status-proceso">EN PROCESO</span>
+                    {% elif t.estado == 'PENDIENTE' %}
+                        <span class="status-pendiente">PENDIENTE</span>
                     {% else %}
                         {{ t.get_estado_display }}
                     {% endif %}
@@ -110,7 +184,8 @@
     </table>
 
     <div class="footer">
-        Documento generado automáticamente por el sistema Help Desk TI.
+        Este documento es un reporte oficial del departamento de TI. <br>
+        &copy; {% now "Y" %} Help Desk Enterprise - Gestión Interna.
     </div>
 
 </body>

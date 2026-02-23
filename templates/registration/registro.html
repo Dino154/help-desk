@@ -2,9 +2,19 @@
 
 {% block content %}
 <style>
-    /* --- CSS ESTILO GOZU --- */
+    /* --- CSS ESTILO GOZU (REGISTRO) --- */
     nav { display: none !important; }
-    body { background-color: #0f172a !important; display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; overflow: hidden; font-family: 'Segoe UI', system-ui, sans-serif; }
+    
+    body { 
+        background-color: #0f172a !important; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        min-height: 100vh; /* Cambiado a min-height para móviles */
+        width: 100vw; 
+        overflow: hidden; 
+        font-family: 'Segoe UI', system-ui, sans-serif; 
+    }
     
     /* ANIMACIÓN DE ENTRADA SUAVE */
     @keyframes slideUpFade {
@@ -16,40 +26,115 @@
         background: white; 
         width: 90vw; 
         height: 85vh; 
-        max-width: 1600px; 
+        min-height: 650px; /* Un poco más alto porque hay más campos */
+        max-width: 1200px; 
         border-radius: 40px; 
         overflow: hidden; 
         display: flex; 
         box-shadow: 0 0 80px rgba(0, 0, 0, 0.9);
-        
-        /* APLICAMOS LA ANIMACIÓN AQUÍ */
         animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     
-    .left-side { width: 40%; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #ffffff; position: relative; }
-    .right-side { width: 60%; background: linear-gradient(135deg, #0f172a, #1e40af, #3b82f6); display: flex; flex-direction: column; justify-content: center; padding: 80px; color: white; }
+    .left-side { 
+        width: 45%; 
+        padding: 40px; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center; 
+        background-color: #ffffff; 
+        position: relative; 
+    }
     
-    .brand-tag { position: absolute; top: 30px; width: 100%; text-align: center; font-weight: 900; letter-spacing: 3px; color: #0f172a; text-transform: uppercase; }
+    .right-side { 
+        width: 55%; 
+        background: linear-gradient(135deg, #0f172a, #1e40af, #3b82f6); 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        padding: 80px; 
+        color: white; 
+    }
+    
+    .brand-tag { 
+        position: absolute; 
+        top: 30px; 
+        width: 100%; 
+        text-align: center; 
+        font-weight: 900; 
+        letter-spacing: 3px; 
+        color: #0f172a; 
+        text-transform: uppercase; 
+    }
     
     .input-wrapper { position: relative; width: 100%; margin-bottom: 15px; }
     
     .input-pill { 
-        width: 100%; padding: 15px 20px 15px 50px; border: 3px solid #0f172a; 
-        border-radius: 60px; outline: none; font-weight: 600; color: #0f172a; 
-        background: transparent; font-size: 14px; 
+        width: 100%; 
+        padding: 15px 20px 15px 50px; 
+        border: 3px solid #0f172a; 
+        border-radius: 60px; 
+        outline: none; 
+        font-weight: 600; 
+        color: #0f172a; 
+        background: transparent; 
+        font-size: 14px; 
+        transition: all 0.3s;
     }
     .input-pill:focus { background-color: #f8fafc; border-color: #3b82f6; }
     
-    .field-icon { position: absolute; left: 18px; top: 18px; width: 20px; height: 20px; color: #0f172a; pointer-events: none; }
+    .field-icon { position: absolute; left: 18px; top: 16px; width: 20px; height: 20px; color: #0f172a; pointer-events: none; }
     
-    .btn-dark-pill { width: 100%; background-color: #0f172a; color: white; border: none; padding: 18px; border-radius: 60px; font-weight: 800; text-transform: uppercase; cursor: pointer; margin-top: 10px; transition: transform 0.2s; }
-    .btn-dark-pill:hover { transform: scale(1.02); }
+    .btn-dark-pill { 
+        width: 100%; 
+        background-color: #0f172a; 
+        color: white; 
+        border: none; 
+        padding: 18px; 
+        border-radius: 60px; 
+        font-weight: 800; 
+        text-transform: uppercase; 
+        cursor: pointer; 
+        margin-top: 10px; 
+        transition: transform 0.2s, background-color 0.2s; 
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.2);
+    }
+    .btn-dark-pill:hover { transform: translateY(-2px); background-color: #1e293b; }
     
-    .welcome-text { font-size: 5vw; font-weight: 900; line-height: 0.9; margin-bottom: 20px; }
+    .welcome-text { font-size: 4vw; font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
     .helptext { display: none !important; } 
     ul.errorlist { list-style: none; padding: 0; color: #ef4444; font-size: 12px; font-weight: bold; margin-left: 15px; margin-top: 5px; }
 
-    @media (max-height: 800px) { .left-side { justify-content: flex-start; overflow-y: auto; padding-top: 80px; } }
+    /* --- RESPONSIVE MÓVIL PERFECCIONADO --- */
+    @media (max-width: 1024px) {
+        body { 
+            overflow-y: auto; 
+            align-items: flex-start; 
+        }
+        .main-card { 
+            flex-direction: column-reverse; 
+            height: auto; 
+            min-height: 100vh; 
+            width: 100vw; 
+            border-radius: 0; 
+        }
+        .left-side { 
+            width: 100%; 
+            height: auto; 
+            flex: 1; 
+            padding: 40px 20px; 
+            justify-content: flex-start; 
+        }
+        .right-side { 
+            width: 100%; 
+            height: auto; 
+            padding: 50px 30px; 
+            text-align: center; 
+            align-items: center;
+        }
+        .welcome-text { font-size: 2.5rem; }
+        .brand-tag { display: none; }
+    }
 </style>
 
 <div class="main-card">
@@ -70,6 +155,7 @@
                     {% elif 'area' in field.name %}
                         <svg class="field-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                     {% endif %}
+                    
                     {{ field }}
                     {{ field.errors }}
                 </div>
@@ -85,9 +171,10 @@
             </div>
         </form>
     </div>
+    
     <div class="right-side">
         <h1 class="welcome-text">Únete al<br>Equipo.</h1>
-        <p style="font-size: 1.2rem; opacity: 0.8; max-width: 500px; font-weight: 500;">Crea tu cuenta para reportar incidencias.</p>
+        <p style="font-size: 1.1rem; opacity: 0.9; max-width: 500px; font-weight: 500;">Crea tu cuenta de forma rápida y segura para empezar a reportar incidencias tecnológicas.</p>
     </div>
 </div>
 {% endblock %}

@@ -1,28 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="max-w-md mx-auto mt-10">
-    <div class="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden text-center p-8">
+<div class="max-w-md mx-auto mt-6 sm:mt-10 px-4 sm:px-0">
+    <div class="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden text-center p-6 sm:p-8">
         
-        <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+        <div class="w-14 h-14 sm:w-16 sm:h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-5 sm:mb-6">
+            <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
         </div>
 
-        <h2 class="text-2xl font-black text-slate-800 mb-2">¿Eliminar Usuario?</h2>
-        <p class="text-slate-500 text-sm mb-8">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-800 mb-2">¿Eliminar Usuario?</h2>
+        <p class="text-slate-500 text-xs sm:text-sm mb-6 sm:mb-8 px-2 sm:px-0">
             Estás a punto de borrar permanentemente a <span class="font-bold text-slate-800">{{ usuario.username }}</span>. 
             Esta acción no se puede deshacer.
         </p>
 
-        <form method="POST" class="flex flex-col gap-3">
+        <form method="POST" class="flex flex-col gap-3 sm:gap-4">
             {% csrf_token %}
-            <button type="submit" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl shadow-lg shadow-red-500/30 transition">
+            <button type="submit" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 sm:py-3 rounded-xl shadow-lg shadow-red-500/30 transition transform active:scale-95">
                 Sí, Eliminar Usuario
             </button>
-            <a href="{% url 'gestion_usuarios' %}" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3 rounded-xl transition">
+            <a href="{% url 'gestion_usuarios' %}" class="w-full block bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3.5 sm:py-3 rounded-xl transition">
                 Cancelar
             </a>
         </form>
+        
     </div>
 </div>
 {% endblock %}

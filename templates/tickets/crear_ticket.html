@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto">
+<div class="max-w-4xl mx-auto px-2 sm:px-0">
     
-    <div class="mb-6 flex justify-between items-center">
+    <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-2xl font-black text-slate-800 tracking-tight">Nuevo Ticket</h1>
-            <p class="text-sm text-slate-500 font-medium">Describe tu incidencia para recibir ayuda.</p>
+            <h1 class="text-2xl md:text-3xl font-black text-slate-800 tracking-tight">Nuevo Ticket</h1>
+            <p class="text-sm md:text-base text-slate-500 font-medium">Describe tu incidencia para recibir ayuda.</p>
         </div>
-        <a href="{% url 'lista_tickets' %}" class="inline-flex items-center text-slate-500 hover:text-blue-600 font-bold text-sm transition">
+        <a href="{% url 'lista_tickets' %}" class="inline-flex items-center text-slate-500 hover:text-blue-600 font-bold text-sm transition bg-white sm:bg-transparent px-4 py-2 sm:p-0 rounded-lg shadow-sm sm:shadow-none border border-slate-200 sm:border-none">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             Volver al Panel
         </a>
     </div>
 
     <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
-        <div class="bg-slate-900 px-8 py-4 border-b border-slate-800">
+        <div class="bg-slate-900 px-6 md:px-8 py-4 border-b border-slate-800">
             <h3 class="text-white font-bold text-sm uppercase tracking-wide">Formulario de Reporte</h3>
         </div>
         
-        <form method="POST" enctype="multipart/form-data" class="p-8 space-y-8" id="ticketForm">
+        <form method="POST" enctype="multipart/form-data" class="p-5 md:p-8 space-y-6 md:space-y-8" id="ticketForm">
             {% csrf_token %}
 
             <div>
@@ -28,10 +28,10 @@
                 </label>
                 <input type="text" name="titulo" id="titulo" required 
                     class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition placeholder-slate-400"
-                    placeholder="Ej: No puedo acceder al sistema de facturación...">
+                    placeholder="Ej: No puedo acceder al sistema...">
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
                 
                 <div>
                     <label for="area" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Área Afectada</label>
@@ -85,7 +85,7 @@
                 <label for="descripcion" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
                     Detalles del Problema
                 </label>
-                <textarea name="descripcion" id="descripcion" rows="5" required
+                <textarea name="descripcion" id="descripcion" rows="4" required
                     class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition placeholder-slate-400 resize-none"
                     placeholder="Explica qué estabas haciendo cuando ocurrió el error..."></textarea>
             </div>
@@ -99,24 +99,24 @@
                     <div class="space-y-1 text-center">
                         
                         <div id="upload-prompt">
-                            <svg class="mx-auto h-12 w-12 text-slate-400 group-hover:text-blue-500 transition" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                            <svg class="mx-auto h-10 w-10 md:h-12 md:w-12 text-slate-400 group-hover:text-blue-500 transition" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                 <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                            <div class="flex text-sm text-slate-600 justify-center">
+                            <div class="flex text-sm text-slate-600 justify-center items-center mt-2">
                                 <label for="archivo" class="relative cursor-pointer bg-white rounded-md font-bold text-blue-600 hover:text-blue-500 focus-within:outline-none">
-                                    <span>Sube un archivo</span>
+                                    <span>Toca para subir foto</span>
                                     <input id="archivo" name="archivo" type="file" accept="image/*" class="sr-only">
                                 </label>
-                                <p class="pl-1">o arrástralo aquí</p>
+                                <p class="pl-1 hidden sm:block">o arrástrala aquí</p>
                             </div>
-                            <p class="text-xs text-slate-500">PNG, JPG, GIF hasta 10MB</p>
+                            <p class="text-[10px] md:text-xs text-slate-400 mt-1">PNG, JPG, GIF (Max 10MB)</p>
                         </div>
 
                         <div id="preview-container" class="hidden">
                             <p class="text-xs font-bold text-green-600 mb-2">¡Archivo Seleccionado!</p>
-                            <img id="image-preview" src="#" alt="Vista previa" class="max-h-48 rounded-lg shadow-md mx-auto border border-slate-200">
-                            <p id="file-name" class="text-xs text-slate-500 mt-2 font-mono"></p>
-                            <button type="button" id="remove-file" class="mt-3 text-xs text-red-500 font-bold hover:text-red-700 underline">
+                            <img id="image-preview" src="#" alt="Vista previa" class="max-h-32 md:max-h-48 rounded-lg shadow-md mx-auto border border-slate-200">
+                            <p id="file-name" class="text-[10px] md:text-xs text-slate-500 mt-2 font-mono truncate max-w-xs mx-auto"></p>
+                            <button type="button" id="remove-file" class="mt-2 md:mt-3 text-xs text-red-500 font-bold hover:text-red-700 underline">
                                 Cambiar imagen
                             </button>
                         </div>
@@ -125,12 +125,12 @@
                 </div>
             </div>
 
-            <div class="pt-6 border-t border-slate-100 flex items-center justify-end gap-4">
-                <a href="{% url 'lista_tickets' %}" class="px-6 py-3 rounded-xl text-slate-500 font-bold hover:bg-slate-100 transition">
+            <div class="pt-6 border-t border-slate-100 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 md:gap-4">
+                <a href="{% url 'lista_tickets' %}" class="w-full sm:w-auto text-center px-6 py-3 md:py-3.5 rounded-xl text-slate-500 font-bold hover:bg-slate-100 transition border border-slate-200 sm:border-transparent">
                     Cancelar
                 </a>
                 
-                <button type="submit" id="btnEnviar" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition transform active:scale-95 flex items-center gap-2">
+                <button type="submit" id="btnEnviar" class="w-full sm:w-auto flex justify-center items-center bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 md:py-3.5 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition transform active:scale-95 gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                     <span>Enviar Ticket</span>
                 </button>
@@ -148,7 +148,7 @@
     const fileName = document.getElementById('file-name');
     const removeBtn = document.getElementById('remove-file');
     
-    // --- LÓGICA DE PREVISUALIZACIÓN ---
+    // LÓGICA DE PREVISUALIZACIÓN
     input.addEventListener('change', function(e) {
         const file = this.files[0];
         if (file) {
@@ -166,12 +166,12 @@
     });
 
     removeBtn.addEventListener('click', function() {
-        input.value = ''; // Limpiar input
+        input.value = ''; 
         uploadPrompt.classList.remove('hidden');
         previewContainer.classList.add('hidden');
     });
 
-    // --- LÓGICA ANTI-DOBLE CLIC ---
+    // LÓGICA ANTI-DOBLE CLIC
     const form = document.getElementById('ticketForm');
     const btnEnviar = document.getElementById('btnEnviar');
 
@@ -187,5 +187,4 @@
         `;
     });
 </script>
-
 {% endblock %}
